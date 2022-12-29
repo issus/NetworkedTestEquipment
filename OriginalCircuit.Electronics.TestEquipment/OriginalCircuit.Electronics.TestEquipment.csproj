@@ -11,10 +11,21 @@
     <RepositoryUrl>https://github.com/issus/NetworkedTestEquipment/OriginalCircuit.Electronics.TestEquipment</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>electronics; rigol; lxi; scpi; lxi.net</PackageTags>
+    <Copyright>Copyright 2022-2023, Original Circuit Limited. Released under MIT license.</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Load\RigolDL3000\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
