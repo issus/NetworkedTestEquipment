@@ -69,6 +69,77 @@ if (mso != null)
 }
 ```
 
+## Setting a Scope Channel to Display a Current Waveform
+
+To set a scope channel to display a current waveform and adjust the channel scaling and offset, you can use the following methods of the `Channel` object:
+
+-   `SetCoupling(Coupling coupling, ScopeChannel channel)`: Sets the coupling type (DC or AC) of the specified channel.
+-   `SetUnits(ChannelUnits units, ScopeChannel channel)`: Sets the units (e.g. voltage, current) of the specified channel.
+-   `SetFineAdjustment(bool enable, ScopeChannel channel)`: Enables or disables fine adjustment of the specified channel.
+-   `SetScale(double scale, ScopeChannel channel)`: Sets the scale (vertical sensitivity) of the specified channel.
+-   `SetOffset(double offset, ScopeChannel channel)`: Sets the offset (vertical position) of the specified channel.
+
+Here is an example of how to use these methods to set a scope channel (e.g. CHAN1) to display a current waveform:
+
+```csharp
+if (mso == null) return;
+
+var current = 0.1; // 100mA
+
+// Set channel 1 to display a DC current waveform
+await mso.Channel.SetCoupling(Coupling.DC, ScopeChannel.CHAN1);
+// Set the units of channel 1 to Ampere
+await mso.Channel.SetUnits(ChannelUnits.Ampere, ScopeChannel.CHAN1);
+// Enable fine adjustment for channel 1
+await mso.Channel.SetFineAdjustment(true, ScopeChannel.CHAN1);
+// Set the scale of channel 1 to give 1 division of headroom
+await mso.Channel.SetScale(Math.Round(current / 6, 2), ScopeChannel.CHAN1);
+// Set the offset of channel 1 to give 1 division of footspace
+await mso.Channel.SetOffset(-(current / 2), ScopeChannel.CHAN1);
+
+// Wait for the operation to be completed
+await mso.WaitForOperationComplete();
+```
+
+Note that the `WaitForOperationComplete` method can be used to wait for the oscilloscope to complete the current operation before continuing with the next operation. This is useful to ensure that the oscilloscope has finished updating the display and is ready to accept new commands.
+
+## Setting the Trigger
+To set up the trigger on an oscilloscope channel, you can use the following steps:
+
+1.  Set the coupling of the trigger to DC using the `SetCoupling` method.
+2.  Set the trigger mode to EDGE using the `SetMode` method.
+3.  Set the trigger edge source to CHAN1 using the `SetSource` method of the `Edge` property.
+4.  Set the trigger edge slope to POS (positive) using the `SetSlope` method of the `Edge` property.
+5.  Set the trigger level to a desired value (e.g. 8.2 volts) using the `SetLevel` method.
+6.  Set the trigger sweep mode to NORM (normal) using the `SetSweep` method.
+7.  Use the `WaitToContinue` method to wait for the oscilloscope to complete the current operation before continuing with the next operation.
+8.  Use the `SendKeypress` method to hide the trigger menu by pressing the MOFF (Menu Off) button on the scope.
+9.  Use the `WaitForOperationComplete` method to wait for the oscilloscope to complete the current operation.
+
+```csharp
+if (mso == null) return;
+
+double triggerLevel = 8.2; // 8.2volts
+
+await mso.Trigger.SetCoupling(Coupling.DC);
+await mso.Trigger.SetMode(TriggerMode.EDGE);
+await mso.Trigger.Edge.SetSource(TriggerEdgeSource.CHAN1);
+await mso.Trigger.Edge.SetSlope(TriggerSlope.POS);
+await mso.Trigger.Edge.SetLevel(triggerLevel);
+await mso.Trigger.SetSweep(TriggerSweep.NORM);
+await mso.WaitToContinue();
+
+// press the Menu Off (MOFF) button on the scope to hide the trigger menu
+await mso.SendKeypress(ScopeKey.MOFF);
+
+await mso.WaitForOperationComplete();
+```
+
+This code sets up the trigger on the oscilloscope to be an edge trigger on channel 1 with a positive slope and a trigger level of 8.2 volts. The sweep mode is set to NORM, which means that the scope will trigger based on the configured trigger settings. Finally, the MOFF button is pressed to hide the trigger menu on the scope.
+
+**Note:** The `TriggerSweep` enumeration has three values: AUTO (auto trigger as well as configured trigger), NORM (only trigger based on configuration), or SIGN (single trigger, then stop the scope). You can choose the appropriate trigger sweep mode based on your needs.
+
+
 ## Displaying Measurements and Statistics
 
 To display measurements or measurements with statistics on the oscilloscope, you can use the `EnableMeasurement` and `EnableStatistic` methods of the `Measure` object. These methods take a `MeasureFunction` representing the measurement function to display (e.g. `VPP`, `VMAX`, `VRMS`) and a `MeasureChannel` representing the channel to display the measurement for (e.g. `CHAN1`, `CHAN2`).
