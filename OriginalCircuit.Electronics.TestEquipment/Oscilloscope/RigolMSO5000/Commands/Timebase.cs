@@ -111,7 +111,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"TIM:DEL:OFF {offset:F4}");
+            await equipment.SendCommand($"TIM:DEL:OFF {offset:F8}");
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"TIM:MAIN:OFF {offset:F4}");
+            await equipment.SendCommand($"TIM:MAIN:OFF {offset:F8}");
         }
 
         /// <summary>

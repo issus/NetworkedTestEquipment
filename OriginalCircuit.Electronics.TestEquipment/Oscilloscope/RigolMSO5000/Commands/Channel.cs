@@ -159,7 +159,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"CHAN{(int)channel}:OFFS {value}");
+            await equipment.SendCommand($"CHAN{(int)channel}:OFFS {value:F6}");
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"CHAN{(int)channel}:SCALE {value}");
+            await equipment.SendCommand($"CHAN{(int)channel}:SCALE {value:F6}");
         }
 
         /// <summary>
