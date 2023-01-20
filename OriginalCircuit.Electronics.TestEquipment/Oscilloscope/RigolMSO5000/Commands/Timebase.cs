@@ -111,7 +111,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"TIM:DEL:OFF {offset:F8}");
+            await equipment.SendCommand($"TIM:DEL:OFFS {offset:F8}");
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
             await equipment.ClearBuffer();
 
-            await equipment.SendCommand("TIM:DEL:OFF?");
+            await equipment.SendCommand("TIM:DEL:OFFS?");
             return await equipment.ReadDouble();
         }
 
@@ -167,7 +167,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
 
-            await equipment.SendCommand($"TIM:MAIN:OFF {offset:F8}");
+            await equipment.SendCommand($"TIM:MAIN:OFFS {offset:F8}");
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
             await equipment.ClearBuffer();
 
-            await equipment.SendCommand("TIM:MAIN:OFF?");
+            await equipment.SendCommand("TIM:MAIN:OFFS?");
             return await equipment.ReadDouble();
         }
 
