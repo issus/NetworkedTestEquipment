@@ -319,7 +319,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
             await equipment.ClearBuffer();
 
-            await equipment.SendCommand($"TRIG:COUP?");
+            await equipment.SendCommand($"TRIG:STAT?");
             return Enum.Parse<TriggerStatus>(await equipment.ReadString());
         }
 
