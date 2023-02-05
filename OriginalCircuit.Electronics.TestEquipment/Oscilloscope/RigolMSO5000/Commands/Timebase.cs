@@ -234,7 +234,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         /// ROLL: indicates the Roll mode.
         /// </summary>
         /// <returns></returns>
-        public async Task SetMode(MeasureMode mode)
+        public async Task SetMode(TimebaseMode mode)
         {
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
@@ -247,7 +247,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         /// The query returns MAIN, XY, or ROLL.
         /// </summary>
         /// <returns></returns>
-        public async Task<MeasureMode> QueryMode()
+        public async Task<TimebaseMode> QueryMode()
         {
             if (equipment is null || !equipment.IsConnected)
                 throw new Exception("Test equipment not connected");
@@ -255,7 +255,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.ClearBuffer();
 
             await equipment.SendCommand($"TIM:MODE?");
-            return Enum.Parse<MeasureMode>(await equipment.ReadString());
+            return Enum.Parse<TimebaseMode>(await equipment.ReadString());
         }
 
         /// <summary>
