@@ -24,7 +24,7 @@ Connecting to a power supply instrument and setting the output to 3.3V:
     var dp800a = new RigolDP800Instrument();
     await dp800a.Connect("10.0.0.132");
     
-    Console.WriteLine($"Connected to {dp800a.InstrumentType.Manufacturer} {dp800a.InstrumentType.Model}");
+    Console.WriteLine($"Connected to {dp800a.Identity.Manufacturer} {dp800a.Identity.Model}");
     
     await dp800a.SelectChannel(Channel.CH1);
     await dp800a.Output.Disable();
