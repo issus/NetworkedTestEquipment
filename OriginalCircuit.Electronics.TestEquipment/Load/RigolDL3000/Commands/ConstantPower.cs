@@ -3,8 +3,15 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Represents a command that sets the electronic load to operate in constant power mode.
+    /// </summary>
     public class ConstantPower : Constant
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantPower"/> class with the specified network test instrument.
+        /// </summary>
+        /// <param name="equipment">The network test instrument used for the command.</param>
         public ConstantPower(NetworkTestInstrument equipment) : base(equipment, "POW") { }
 
         /// <summary>

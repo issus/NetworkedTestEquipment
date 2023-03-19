@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.PowerSupply.RigolDP800.Commands
 {
+    /// <summary>
+    /// Provides access to the status register of a Rigol DP800 series power supply instrument.
+    /// </summary>
     public class Status
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Status class with the specified equipment object.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument object representing the connected DP800 series power supply instrument.</param>
         public Status(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;

@@ -3,8 +3,15 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Represents a command for setting the load's constant resistance mode.
+    /// </summary>
     public class ConstantResistance : ConstantWithRange
     {
+        /// <summary>
+        /// Initializes a new instance of the ConstantResistance class with specified equipment and unit.
+        /// </summary>
+        /// <param name="equipment">The network test equipment to which the command is sent.</param>
         public ConstantResistance(NetworkTestInstrument equipment) : base(equipment, "RES") { }
 
         /// <summary>

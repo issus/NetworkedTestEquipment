@@ -4,22 +4,27 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Class representing a measurement command for Rigol DL3000 series oscilloscope.
+    /// </summary>
     public class Measurement
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Constructs a new instance of Measurement with the specified NetworkTestInstrument.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument to use for communication.</param>
         public Measurement(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
         }
 
-
         /// <summary>
         /// Reads the input voltage of the instrument.
         /// </summary>
-        /// <param name="chan"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <returns>The input voltage in volts.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<double> Voltage()
         {
             if (equipment is null || !equipment.IsConnected)

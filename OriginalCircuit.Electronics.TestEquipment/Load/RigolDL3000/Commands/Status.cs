@@ -4,10 +4,17 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Represents a command to query the current status of the instrument.
+    /// </summary>
     public class Status
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Status"/> class.
+        /// </summary>
+        /// <param name="equipment">The instrument to query the status from.</param>
         public Status(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;

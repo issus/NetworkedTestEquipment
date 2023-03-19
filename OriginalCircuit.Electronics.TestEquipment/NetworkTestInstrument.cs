@@ -7,59 +7,172 @@ using System.Diagnostics;
 
 namespace OriginalCircuit.Electronics.TestEquipment
 {
+    /// <summary>
+    /// Flags used to indicate events that can be registered for by an instrument
+    /// </summary>
     [Flags]
     public enum EventRegister
     {
+        /// <summary>
+        /// Indicates that an operation has completed successfully
+        /// </summary>
         OperationComplete = 0,
+
+        /// <summary>
+        /// Indicates that an error has occurred while processing a query
+        /// </summary>
         QueryError = 4,
+
+        /// <summary>
+        /// Indicates that a device error has occurred
+        /// </summary>
         DeviceError = 8,
+
+        /// <summary>
+        /// Indicates that an execution error has occurred
+        /// </summary>
         ExecutionError = 16,
+
+        /// <summary>
+        /// Indicates that a command error has occurred
+        /// </summary>
         CommandError = 32,
+
+        /// <summary>
+        /// Indicates that the instrument has been powered on
+        /// </summary>
         PowerOn = 128
     }
 
+    /// <summary>
+    /// Flags used to indicate the status of an instrument
+    /// </summary>
     [Flags]
     public enum StatusRegister
     {
+        /// <summary>
+        /// Indicates that an error is in the instrument's error queue
+        /// </summary>
         ErrorQueue = 4,
+
+        /// <summary>
+        /// Indicates that a questionable condition exists
+        /// </summary>
         QuestionableSummary = 8,
+
+        /// <summary>
+        /// Indicates that a message is available for retrieval
+        /// </summary>
         MessageAvailable = 16,
+
+        /// <summary>
+        /// Indicates that a standard event has occurred
+        /// </summary>
         StandardEventSummary = 32,
+
+        /// <summary>
+        /// Indicates that a master summary has occurred
+        /// </summary>
         MasterSummary = 64,
+
+        /// <summary>
+        /// Indicates that an operation summary has occurred
+        /// </summary>
         OperationSummary = 128
     }
 
+    /// <summary>
+    /// Types of instruments available in the library
+    /// </summary>
     public enum InstrumentType
     {
+        /// <summary>
+        /// An oscilloscope instrument
+        /// </summary>
         Oscilloscope,
+
+        /// <summary>
+        /// A power supply instrument
+        /// </summary>
         Supply,
+
+        /// <summary>
+        /// A load instrument
+        /// </summary>
         Load,
+
+        /// <summary>
+        /// A multimeter instrument
+        /// </summary>
         Multimeter,
-        WaveformGenerator
+
+        /// <summary>
+        /// A waveform generator instrument
+        /// </summary>
+        WaveformGenerator,
+
+        /// <summary>
+        /// An LCR meter instrument
+        /// </summary>
+        LCRMeter
     }
 
+    /// <summary>
+    /// Represents an abstract class for network test instrument.
+    /// </summary>
     public abstract class NetworkTestInstrument
     {
         TcpClient? tcpClient;
         bool lastConnectionState = false;
 
+        /// <summary>
+        /// Gets or sets the read timeout.
+        /// </summary>
         public int ReadTimeout { get; set; } = 1000;
+
+        /// <summary>
+        /// Gets or sets the send timeout.
+        /// </summary>
         public int SendTimeout { get; set; } = 500;
 
+        /// <summary>
+        /// Gets or sets the type of the instrument.
+        /// </summary>
         public InstrumentType InstrumentType { get; set; }
 
+        /// <summary>
+        /// Gets the identity of the instrument.
+        /// </summary>
         public InstrumentIdentity? Identity { get; private set; }
 
+        /// <summary>
+        /// Gets the remote host.
+        /// </summary>
         public IPEndPoint? RemoteHost { get; private set; }
 
+        /// <summary>
+        /// Occurs when connection state changes.
+        /// </summary>
         public event EventHandler<bool>? ConnectionStateChanged;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NetworkTestInstrument"/> class.
+        /// </summary>
+        /// <param name="instrumentType">The type of instrument.</param>
+        /// <param name="remoteHost">The remote host to connect to.</param>
         public NetworkTestInstrument(InstrumentType instrumentType, IPEndPoint? remoteHost = null)
         {
             InstrumentType = instrumentType;
             RemoteHost = remoteHost;
         }
 
+        /// <summary>
+        /// Connects to a test equipment at a given IP address and port.
+        /// </summary>
+        /// <param name="ipAddress">IP address of the test equipment.</param>
+        /// <param name="port">Port number to use for the connection. Default is 5555.</param>
+        /// <returns>True if connection was successful, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when ipAddress is null or empty.</exception>
         public async Task<bool> Connect(string ipAddress, int port = 5555)
         {
             if (String.IsNullOrEmpty(ipAddress))
@@ -68,11 +181,20 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return await Connect(new IPEndPoint(IPAddress.Parse(ipAddress), port));
         }
 
+        /// <summary>
+        /// Connects to a test equipment using the default RemoteHost.
+        /// </summary>
+        /// <returns>True if connection was successful, false otherwise.</returns>
         public async Task<bool> Connect()
         {
             return await Connect(RemoteHost);
         }
 
+        /// <summary>
+        /// Connects to a test equipment using the provided IPEndPoint.
+        /// </summary>
+        /// <param name="remoteHost">IPEndPoint of the test equipment.</param>
+        /// <returns>True if connection was successful, false otherwise.</returns>
         public async Task<bool> Connect(IPEndPoint? remoteHost)
         {
             if (remoteHost == null)
@@ -117,6 +239,9 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return tcpClient.Connected;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the test equipment is connected.
+        /// </summary>
         public bool IsConnected
         {
             get
@@ -141,6 +266,9 @@ namespace OriginalCircuit.Electronics.TestEquipment
             }
         }
 
+        /// <summary>
+        /// Disconnects from the test equipment.
+        /// </summary>
         public void Disconnect()
         {
             if (tcpClient != null)
@@ -153,6 +281,11 @@ namespace OriginalCircuit.Electronics.TestEquipment
             }
         }
 
+        /// <summary>
+        /// Sends a command to the test equipment.
+        /// </summary>
+        /// <param name="command">The command to send.</param>
+        /// <exception cref="ArgumentNullException">Thrown when command is null or empty.</exception>
         public async Task SendCommand(string command)
         {
             if (tcpClient is null || !IsConnected)
@@ -173,6 +306,11 @@ namespace OriginalCircuit.Electronics.TestEquipment
             await stream.WriteAsync(bytes);
         }
 
+        /// <summary>
+        /// Reads data from the connected test equipment.
+        /// </summary>
+        /// <returns>Byte array containing the received data.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task<byte[]?> ReadData()
         {
             if (!IsConnected || tcpClient == null)
@@ -241,6 +379,11 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return data;
         }
 
+        /// <summary>
+        /// Reads bitmap data from the connected test equipment.
+        /// </summary>
+        /// <returns>An Image object containing the bitmap data.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task<Image?> ReadBitmap()
         {
             if (tcpClient is null || !IsConnected)
@@ -307,6 +450,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return null;
         }
 
+        /// <summary>
+        /// Reads boolean data from the connected test equipment.
+        /// </summary>
+        /// <returns>Boolean value of the received data.</returns>
         public async Task<bool> ReadBool()
         {
             string? data = (await ReadString())?.ToUpper();
@@ -320,6 +467,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return false;
         }
 
+        /// <summary>
+        /// Reads string data from the connected test equipment.
+        /// </summary>
+        /// <returns>String containing the received data.</returns>
         public async Task<string> ReadString()
         {
             var data = await ReadData();
@@ -329,6 +480,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return Encoding.UTF8.GetString(data).Trim();
         }
 
+        /// <summary>
+        /// Reads integer data from the connected test equipment.
+        /// </summary>
+        /// <returns>Integer value of the received data.</returns>
         public async Task<int> ReadInt()
         {
             string response = (await ReadString()).Trim();
@@ -339,6 +494,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
                 return int.MinValue;
         }
 
+        /// <summary>
+        /// Reads double data from the connected test equipment.
+        /// </summary>
+        /// <returns>Double value of the received data.</returns>
         public async Task<double> ReadDouble()
         {
             string response = (await ReadString()).Trim();
@@ -351,7 +510,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             else
                 return double.NaN;
         }
-
+        /// <summary>
+        /// Clears the data buffer if the client is connected and there is data available to be read.
+        /// </summary>
+        /// <returns></returns>
         public async Task ClearBuffer()
         {
             if (tcpClient is null || !IsConnected)
@@ -362,7 +524,7 @@ namespace OriginalCircuit.Electronics.TestEquipment
         }
 
         /// <summary>
-        /// This command clears all status data structures in a device.
+        /// Sends the clear status command to the device which clears all status data structures.
         /// </summary>
         /// <returns></returns>
         public async Task ClearStatus()
@@ -370,11 +532,20 @@ namespace OriginalCircuit.Electronics.TestEquipment
             await SendCommand("*CLS");
         }
 
+        /// <summary>
+        /// Sets the Standard Event Status Enable mask for the device.
+        /// </summary>
+        /// <param name="mask">The mask to be set for the device</param>
+        /// <returns></returns>
         public async Task SetStandardEventStatusEnable(EventRegister mask)
         {
             await SendCommand($"*ESE {(byte)mask}");
         }
 
+        /// <summary>
+        /// Queries the Standard Event Status Enable mask for the device.
+        /// </summary>
+        /// <returns>The EventRegister mask for the device</returns>
         public async Task<EventRegister> QueryStandardEventStatusEnable()
         {
             await ClearBuffer();
@@ -385,6 +556,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return (EventRegister)response;
         }
 
+        /// <summary>
+        /// Queries the Event Register for the device.
+        /// </summary>
+        /// <returns>The EventRegister for the device</returns>
         public async Task<EventRegister> QueryEventRegister()
         {
             await ClearBuffer();
@@ -395,6 +570,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return (EventRegister)response;
         }
 
+        /// <summary>
+        /// Queries the device for its identification information.
+        /// </summary>
+        /// <returns>An InstrumentIdentity object containing the identification information of the device or null if no response was received</returns>
         public async Task<InstrumentIdentity?> Identification()
         {
             await ClearBuffer();
@@ -418,11 +597,19 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return new InstrumentIdentity(idents[0], idents[1], idents[2], idents[3]);
         }
 
+        /// <summary>
+        /// Sends a command to register an operation complete event.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task RegisterOperationComplete()
         {
             await SendCommand("*OPC");
         }
 
+        /// <summary>
+        /// Sends a command to query if an operation is complete.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation. The result is true if the operation is complete; otherwise, false.</returns>
         public async Task<bool> QueryOperationComplete()
         {
             await ClearBuffer();
@@ -432,6 +619,11 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return await ReadBool();
         }
 
+        /// <summary>
+        /// Waits for an operation to complete.
+        /// </summary>
+        /// <param name="seconds">The number of seconds to wait for the operation to complete. Default is 1 second.</param>
+        /// <returns>A task representing the asynchronous operation. The result is true if the operation is complete; otherwise, false.</returns>
         public async Task<bool> WaitForOperationComplete(double seconds = 1)
         {
             int maxWaits = (int)Math.Ceiling(seconds / 0.1);
@@ -446,16 +638,29 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return await QueryOperationComplete();
         }
 
+        /// <summary>
+        /// Sends a command to reset the device.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task ResetDevice()
         {
             await SendCommand("*RST");
         }
 
+        /// <summary>
+        /// Sets the specified bits in the Service Request Enable (SRE) register to enable the corresponding service request events
+        /// </summary>
+        /// <param name="mask">The mask indicating which service request events to enable</param>
+        /// <returns>A task representing the asynchronous operation</returns>
         public async Task SetServiceRequestEnable(StatusRegister mask)
         {
             await SendCommand($"*SRE {(byte)mask}");
         }
 
+        /// <summary>
+        /// Queries the Service Request Enable (SRE) register to determine which service request events are enabled
+        /// </summary>
+        /// <returns>The EventRegister value indicating which service request events are enabled</returns>
         public async Task<EventRegister> QueryServiceRequestEnable()
         {
             await ClearBuffer();
@@ -466,6 +671,10 @@ namespace OriginalCircuit.Electronics.TestEquipment
             return (EventRegister)response;
         }
 
+        /// <summary>
+        /// Queries the Status Byte (STB) register to determine the instrument status
+        /// </summary>
+        /// <returns>The StatusRegister value indicating the instrument status</returns>
         public async Task<StatusRegister> QueryStatus()
         {
             await ClearBuffer();
@@ -479,7 +688,7 @@ namespace OriginalCircuit.Electronics.TestEquipment
         /// <summary>
         /// Queries the self-test results of the instrument.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The self-test results of the instrument as a string.</returns>
         public async Task<string> QuerySelfTest()
         {
             await ClearBuffer();
@@ -492,7 +701,6 @@ namespace OriginalCircuit.Electronics.TestEquipment
         /// Configures the instrument to wait for all pending operations to complete before executing 
         /// any additional commands.
         /// </summary>
-        /// <returns></returns>
         public async Task WaitToContinue()
         {
             await SendCommand("*WAI");
@@ -501,16 +709,19 @@ namespace OriginalCircuit.Electronics.TestEquipment
         /// <summary>
         /// Generates a trigger action.
         /// </summary>
-        /// <returns></returns>
         public async Task TriggerInstrument()
         {
             await SendCommand("*TRG");
         }
 
+        /// <summary>
+        /// Releases all resources used by the LXI instrument object.
+        /// </summary>
         public void Dispose()
         {
             if (tcpClient != null)
                 tcpClient.Dispose();
         }
+
     }
 }

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000
 {
-
+    /// <summary>
+    /// Represents the various questionable status of the equipment.
+    /// </summary>
     [Flags]
     public enum QuestionableStatus
     {
@@ -68,42 +70,111 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000
         VoltageSink = 16384
     }
 
+    /// <summary>
+    /// Represents the range options for the DL3000 instrument.
+    /// </summary>
     public enum DL3000Range
     {
+        /// <summary>
+        /// Represents the minimum range.
+        /// </summary>
         Minimum,
+        /// <summary>
+        /// Represents the maximum range.
+        /// </summary>
         Maximum,
+        /// <summary>
+        /// Represents the default range.
+        /// </summary>
         Default
     }
 
+    /// <summary>
+    /// Represents the available source functions for the DL3000 instrument.
+    /// </summary>
     public enum SourceFunction
     {
+        /// <summary>
+        /// Represents the current source function.
+        /// </summary>
         Current,
+        /// <summary>
+        /// Represents the resistance source function.
+        /// </summary>
         Resistance,
+        /// <summary>
+        /// Represents the voltage source function.
+        /// </summary>
         Voltage,
+        /// <summary>
+        /// Represents the power source function.
+        /// </summary>
         Power
     }
 
+    /// <summary>
+    /// Represents the available function modes for the DL3000 instrument.
+    /// </summary>
     public enum FunctionMode
     {
+        /// <summary>
+        /// Represents the fixed function mode.
+        /// </summary>
         Fixed,
+        /// <summary>
+        /// Represents the list function mode.
+        /// </summary>
         List,
+        /// <summary>
+        /// Represents the waveform function mode.
+        /// </summary>
         Waveform,
+        /// <summary>
+        /// Represents the battery function mode.
+        /// </summary>
         Battery
     }
 
+    /// <summary>
+    /// Represents the available transient modes for the DL3000 instrument.
+    /// </summary>
     public enum TransientMode
     {
+        /// <summary>
+        /// Represents the continuous transient mode.
+        /// </summary>
         Continuous,
+        /// <summary>
+        /// Represents the pulse transient mode.
+        /// </summary>
         Pulse,
+        /// <summary>
+        /// Represents the toggle transient mode.
+        /// </summary>
         Toggle
     }
 
+    /// <summary>
+    /// Represents a Rigol DL3000 instrument that communicates with the equipment via LXI/SCPI.
+    /// </summary>
     public class RigolDL3000Instrument : NetworkTestInstrument
     {
+        /// <summary>
+        /// Gets the status information for the instrument.
+        /// </summary>
         public Status Status { get; }
+        /// <summary>
+        /// Gets the measurement information for the instrument.
+        /// </summary>
         public Measurement Measure { get; }
+        /// <summary>
+        /// Gets or sets the source information for the instrument.
+        /// </summary>
         public Source Source { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RigolDL3000Instrument"/> class with a type of <see cref="InstrumentType.Load"/>.
+        /// </summary>
         public RigolDL3000Instrument() : base(InstrumentType.Load)
         {
             Status = new Status(this);
@@ -111,4 +182,5 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000
             Source = new Source(this);
         }
     }
+
 }

@@ -3,17 +3,40 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Represents a source command for the Rigol DL3000 series network test instrument.
+    /// </summary>
     public class Source
     {
         NetworkTestInstrument equipment;
+
+        /// <summary>
+        /// Gets the Constant Current command object.
+        /// </summary>
         public ConstantCurrent ConstantCurrent { get; }
+
+        /// <summary>
+        /// Gets the Constant Voltage command object.
+        /// </summary>
         public ConstantVoltage ConstantVoltage { get; }
+
+        /// <summary>
+        /// Gets the Constant Resistance command object.
+        /// </summary>
         public ConstantResistance ConstantResistance { get; }
+
+        /// <summary>
+        /// Gets the Constant Power command object.
+        /// </summary>
         public ConstantPower ConstantPower { get; }
 
         //todo: list
         //todo: wave
 
+        /// <summary>
+        /// Initializes a new instance of the Source class.
+        /// </summary>
+        /// <param name="equipment">The network test instrument.</param>
         public Source(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
@@ -24,6 +47,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             ConstantResistance = new ConstantResistance(equipment);
         }
 
+        /// <summary>
+        /// Converts a string input to the corresponding <see cref="SourceFunction"/> value.
+        /// </summary>
+        /// <param name="input">The string input representing a <see cref="SourceFunction"/> value.</param>
+        /// <returns>The corresponding <see cref="SourceFunction"/> value, or null if the input is invalid.</returns>
         static internal SourceFunction? FunctionFromString(string input)
         {
             switch (input)
@@ -41,6 +69,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             return null;
         }
 
+        /// <summary>
+        /// Converts a string input to the corresponding <see cref="FunctionMode"/> value.
+        /// </summary>
+        /// <param name="input">The string input representing a <see cref="FunctionMode"/> value.</param>
+        /// <returns>The corresponding <see cref="FunctionMode"/> value, or null if the input is invalid.</returns>
         static internal FunctionMode? FunctionModeFromString(string input)
         {
             // The query returns LIST in List mode; returns FIX or BATT in waveform display
@@ -60,6 +93,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             return null;
         }
 
+        /// <summary>
+        /// Converts a string input to the corresponding <see cref="DL3000Range"/> value.
+        /// </summary>
+        /// <param name="input">The string input representing a <see cref="DL3000Range"/> value.</param>
+        /// <returns>The corresponding <see cref="DL3000Range"/> value, or null if the input is invalid.</returns>
         static internal DL3000Range? RangeFromString(string input)
         {
             switch (input.ToUpper())
@@ -78,6 +116,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             return null;
         }
 
+        /// <summary>
+        /// Converts a string input to the corresponding <see cref="TransientMode"/> value.
+        /// </summary>
+        /// <param name="input">The string input representing a <see cref="TransientMode"/> value.</param>
+        /// <returns>The corresponding <see cref="TransientMode"/> value, or null if the input is invalid.</returns>
         static internal TransientMode? TransientModeFromString(string input)
         {
             switch (input.ToUpper())
@@ -96,11 +139,19 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             return null;
         }
 
+        /// <summary>
+        /// Enables the input of the electronic load.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Enable()
         {
             await SetInput(true);
         }
 
+        /// <summary>
+        /// Disables the input of the electronic load.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task Disable()
         {
             await SetInput(false);
@@ -109,9 +160,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
         /// <summary>
         /// Sets the input of the electronic load to be on or off.
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <param name="enabled">True to turn the input on; false to turn the input off.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task SetInput(bool enabled)
         {
             if (equipment is null || !equipment.IsConnected)

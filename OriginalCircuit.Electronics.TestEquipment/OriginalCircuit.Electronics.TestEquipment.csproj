@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>OriginalCircuit</Authors>
-    <Description>Communicate using SCPI commands to LXI based electronics test equipment (Rigol MSO5000, DP800, DL3000 series).</Description>
+    <Description>Communicate using SCPI commands to LXI based electronics test equipment (Rigol MSO5000, DP800, DL3000 series, Rohde &amp; Schwarz LCX series).</Description>
     <PackageProjectUrl>https://github.com/issus/NetworkedTestEquipment</PackageProjectUrl>
     <RepositoryUrl>https://github.com/issus/NetworkedTestEquipment/OriginalCircuit.Electronics.TestEquipment</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -15,7 +15,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands
 {
+    /// <summary>
+    /// The display type for the waveform data.
+    /// </summary>
     public enum DisplayType
     {
         /// <summary>
@@ -22,15 +25,21 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         DOTS
     }
 
+    /// <summary>
+    /// The Display class provides access to functions that control the display of the instrument.
+    /// </summary>
     public class Display
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Display class.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument object to use for communication with the instrument.</param>
         public Display(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
         }
-
 
         /// <summary>
         /// Clears all the waveforms on the screen
@@ -46,7 +55,6 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"DISP:CLE");
         }
 
-
         /// <summary>
         /// Sets the display type of the waveforms on the screen
         /// </summary>
@@ -58,7 +66,6 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
             await equipment.SendCommand($"DISP:TYPE {mode}");
         }
-
 
         /// <summary>
         /// Queries the display type of the waveforms on the screen

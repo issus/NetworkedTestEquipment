@@ -6,75 +6,463 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands
 {
+    /// <summary>
+    /// Represents the available measurement channels in the instrument.
+    /// </summary>
     public enum MeasureChannel
     {
+        /// <summary>
+        /// Channel 1
+        /// </summary>
         CHAN1,
+
+        /// <summary>
+        /// Channel 2
+        /// </summary>
         CHAN2,
+
+        /// <summary>
+        /// Channel 3
+        /// </summary>
         CHAN3,
+
+        /// <summary>
+        /// Channel 4
+        /// </summary>
         CHAN4,
-        D0, D1, D2, D3,
-        D4, D5, D6, D7,
-        D8, D9, D10, D11,
-        D12, D13, D14, D15,
-        MATH1, MATH2,
-        MATH3, MATH4,
+
+        /// <summary>
+        /// Digital I/O channel 0
+        /// </summary>
+        D0,
+
+        /// <summary>
+        /// Digital I/O channel 1
+        /// </summary>
+        D1,
+
+        /// <summary>
+        /// Digital I/O channel 2
+        /// </summary>
+        D2,
+
+        /// <summary>
+        /// Digital I/O channel 3
+        /// </summary>
+        D3,
+
+        /// <summary>
+        /// Digital I/O channel 4
+        /// </summary>
+        D4,
+
+        /// <summary>
+        /// Digital I/O channel 5
+        /// </summary>
+        D5,
+
+        /// <summary>
+        /// Digital I/O channel 6
+        /// </summary>
+        D6,
+
+        /// <summary>
+        /// Digital I/O channel 7
+        /// </summary>
+        D7,
+
+        /// <summary>
+        /// Digital I/O channel 8
+        /// </summary>
+        D8,
+
+        /// <summary>
+        /// Digital I/O channel 9
+        /// </summary>
+        D9,
+
+        /// <summary>
+        /// Digital I/O channel 10
+        /// </summary>
+        D10,
+
+        /// <summary>
+        /// Digital I/O channel 11
+        /// </summary>
+        D11,
+
+        /// <summary>
+        /// Digital I/O channel 12
+        /// </summary>
+        D12,
+
+        /// <summary>
+        /// Digital I/O channel 13
+        /// </summary>
+        D13,
+
+        /// <summary>
+        /// Digital I/O channel 14
+        /// </summary>
+        D14,
+
+        /// <summary>
+        /// Digital I/O channel 15
+        /// </summary>
+        D15,
+
+        /// <summary>
+        /// Math channel 1
+        /// </summary>
+        MATH1,
+
+        /// <summary>
+        /// Math channel 2
+        /// </summary>
+        MATH2,
+
+        /// <summary>
+        /// Math channel 3
+        /// </summary>
+        MATH3,
+
+        /// <summary>
+        /// Math channel 4
+        /// </summary>
+        MATH4,
+
+        /// <summary>
+        /// Turn off the channel
+        /// </summary>
         OFF
     }
 
+    /// <summary>
+    /// Represents the available measurement items in the instrument.
+    /// </summary>
     public enum MeasureItem
     {
-        ITEM1, ITEM2, ITEM3, ITEM4, ITEM5,
-        ITEM6, ITEM7, ITEM8, ITEM9, ITEM10,
+        /// <summary>
+        /// Measurement item 1
+        /// </summary>
+        ITEM1,
+
+        /// <summary>
+        /// Measurement item 2
+        /// </summary>
+        ITEM2,
+
+        /// <summary>
+        /// Measurement item 3
+        /// </summary>
+        ITEM3,
+
+        /// <summary>
+        /// Measurement item 4
+        /// </summary>
+        ITEM4,
+
+        /// <summary>
+        /// Measurement item 5
+        /// </summary>
+        ITEM5,
+
+        /// <summary>
+        /// Measurement item 6
+        /// </summary>
+        ITEM6,
+
+        /// <summary>
+        /// Measurement item 7
+        /// </summary>
+        ITEM7,
+
+        /// <summary>
+        /// Measurement item 8
+        /// </summary>
+        ITEM8,
+
+        /// <summary>
+        /// Measurement item 9
+        /// </summary>
+        ITEM9,
+
+        /// <summary>
+        /// Measurement item 10
+        /// </summary>
+        ITEM10,
+
+        /// <summary>
+        /// All available measurement items
+        /// </summary>
         ALL
     }
 
+    /// <summary>
+    /// Represents the measurement mode.
+    /// </summary>
     public enum MeasureMode
     {
+        /// <summary>
+        /// Normal measurement mode.
+        /// </summary>
         Normal,
+        /// <summary>
+        /// Precision measurement mode.
+        /// </summary>
         Precision
     }
 
+    /// <summary>
+    /// Represents the measurement function.
+    /// </summary>
     public enum MeasureFunction
     {
-        VMAX, VMIN, VPP, VTOP, VBASE, VAMP, VAVG,
-        VRMS, OVERSHOOT, PRESHOOT, MAREA,
-        MPAREA, PERIOD, FREQUENCY, RTIME,
-        FTIME, PWIDTH, NWIDTH, PDUTY, NDUTY,
-        TVMAX, TVMIN, PSLEWRATE, NSLEWRATE,
-        VUPPER, VMID, VLOWER, VARIANCE, PVRMS,
-        PPULSES, NPULSES, PEDGES, NEDGES, RRDELAY,
-        RFDELAY, FRDELAY, FFDELAY, RRPHASE, RFPHASE,
-        FRPHASE, FFPHASE
+        /// <summary>
+        /// Maximum voltage.
+        /// </summary>
+        VMAX,
+        /// <summary>
+        /// Minimum voltage.
+        /// </summary>
+        VMIN,
+        /// <summary>
+        /// Peak-to-peak voltage.
+        /// </summary>
+        VPP,
+        /// <summary>
+        /// Top voltage.
+        /// </summary>
+        VTOP,
+        /// <summary>
+        /// Base voltage.
+        /// </summary>
+        VBASE,
+        /// <summary>
+        /// Amplitude voltage.
+        /// </summary>
+        VAMP,
+        /// <summary>
+        /// Average voltage.
+        /// </summary>
+        VAVG,
+        /// <summary>
+        /// RMS voltage.
+        /// </summary>
+        VRMS,
+        /// <summary>
+        /// Overshoot voltage.
+        /// </summary>
+        OVERSHOOT,
+        /// <summary>
+        /// Preshoot voltage.
+        /// </summary>
+        PRESHOOT,
+        /// <summary>
+        /// Mean area voltage.
+        /// </summary>
+        MAREA,
+        /// <summary>
+        /// Mean positive area voltage.
+        /// </summary>
+        MPAREA,
+        /// <summary>
+        /// Period.
+        /// </summary>
+        PERIOD,
+        /// <summary>
+        /// Frequency.
+        /// </summary>
+        FREQUENCY,
+        /// <summary>
+        /// Rise time.
+        /// </summary>
+        RTIME,
+        /// <summary>
+        /// Fall time.
+        /// </summary>
+        FTIME,
+        /// <summary>
+        /// Positive pulse width.
+        /// </summary>
+        PWIDTH,
+        /// <summary>
+        /// Negative pulse width.
+        /// </summary>
+        NWIDTH,
+        /// <summary>
+        /// Positive duty cycle.
+        /// </summary>
+        PDUTY,
+        /// <summary>
+        /// Negative duty cycle.
+        /// </summary>
+        NDUTY,
+        /// <summary>
+        /// Top voltage timing.
+        /// </summary>
+        TVMAX,
+        /// <summary>
+        /// Base voltage timing.
+        /// </summary>
+        TVMIN,
+        /// <summary>
+        /// Positive slew rate.
+        /// </summary>
+        PSLEWRATE,
+        /// <summary>
+        /// Negative slew rate.
+        /// </summary>
+        NSLEWRATE,
+        /// <summary>
+        /// Upper voltage limit.
+        /// </summary>
+        VUPPER,
+        /// <summary>
+        /// Mid voltage.
+        /// </summary>
+        VMID,
+        /// <summary>
+        /// Lower voltage limit.
+        /// </summary>
+        VLOWER,
+        /// <summary>
+        /// Variance.
+        /// </summary>
+        VARIANCE,
+        /// <summary>
+        /// Positive RMS voltage.
+        /// </summary>
+        PVRMS,
+        /// <summary>
+        /// Positive pulses count.
+        /// </summary>
+        PPULSES,
+        /// <summary>
+        /// Negative pulses count.
+        /// </summary>
+        NPULSES,
+        /// <summary>
+        /// Positive edges count.
+        /// </summary>
+        PEDGES,
+        /// <summary>
+        /// Negative edges count.
+        /// </summary>
+        NEDGES,
+        /// <summary>
+        /// Rising to rising delay.
+        /// </summary>
+        RRDELAY,
+        /// <summary>
+        /// Rising to falling delay.
+        /// </summary>
+        RFDELAY,
+        /// <summary>
+        /// Falling to rising delay.
+        /// </summary>
+        FRDELAY,
+        /// <summary>
+        /// Falling to falling delay.
+        /// </summary>
+        FFDELAY,
+        /// <summary>
+        /// Rising to rising phase.
+        /// </summary>
+        RRPHASE,
+        /// <summary>
+        /// Rising to falling phase.
+        /// </summary>
+        RFPHASE,
+        /// <summary>
+        /// Falling to rising phase.
+        /// </summary>
+        FRPHASE,
+        /// <summary>
+        /// Falling to falling phase.
+        /// </summary>
+        FFPHASE
     }
-
+    /// <summary>
+    /// Enum representing the type of measurement to be taken.
+    /// </summary>
     public enum MeasureType
     {
+        /// <summary>
+        /// The maximum value of the measurement.
+        /// </summary>
         Maximum,
+        /// <summary>
+        /// The minimum value of the measurement.
+        /// </summary>
         Minimum,
+        /// <summary>
+        /// The current value of the measurement.
+        /// </summary>
         Current,
+        /// <summary>
+        /// The average value of the measurement.
+        /// </summary>
         Average,
+        /// <summary>
+        /// The deviation value of the measurement.
+        /// </summary>
         Deviation,
+        /// <summary>
+        /// The count of the measurement.
+        /// </summary>
         Count
     }
 
+    /// <summary>
+    /// Enum representing the area of the measurement.
+    /// </summary>
     public enum MeasureArea
     {
+        /// <summary>
+        /// The main area of the measurement.
+        /// </summary>
         Main,
+        /// <summary>
+        /// The zoom area of the measurement.
+        /// </summary>
         Zoom,
+        /// <summary>
+        /// The cursor area of the measurement.
+        /// </summary>
         Cursor
     }
 
+    /// <summary>
+    /// Enum representing the category of the measurement.
+    /// </summary>
     public enum MeasureCategory
     {
+        /// <summary>
+        /// The horizontal category of the measurement.
+        /// </summary>
         Horizontal = 0,
+        /// <summary>
+        /// The vertical category of the measurement.
+        /// </summary>
         Vertical = 1,
+        /// <summary>
+        /// The other category of the measurement.
+        /// </summary>
         Other = 2
     }
 
+    /// <summary>
+    /// Represents a measurement instance.
+    /// </summary>
     public class Measure
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Measure class.
+        /// </summary>
+        /// <param name="equipment">The instrument to be used for measurement.</param>
         public Measure(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
@@ -524,21 +912,13 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Queries the statistical results of any waveform parameter of the specified source
+        /// Queries the statistical results of any waveform parameter of the specified source.
         /// The query returns the current measurement value in scientific notation.
         /// </summary>
-        /// <returns></returns>
-        public async Task<double> QueryMeasurement(MeasureFunction function)
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.ClearBuffer();
-
-            await equipment.SendCommand($"MEAS:ITEM? {FunctionToString(function)}");
-            return await equipment.ReadDouble();
-        }
-
+        /// <param name="function">The type of measurement function to perform</param>
+        /// <param name="source">The measurement source channel</param>
+        /// <param name="sourceB">The second measurement source channel, if applicable</param>
+        /// <returns>The measurement result in scientific notation</returns>
         public async Task<double> QueryMeasurement(MeasureFunction function, MeasureChannel source, MeasureChannel? sourceB = null)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -550,6 +930,25 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
                 await equipment.SendCommand($":MEAS:ITEM? {FunctionToString(function)},{source}");
             else
                 await equipment.SendCommand($":MEAS:ITEM? {FunctionToString(function)},{source},{sourceB}");
+
+            return await equipment.ReadDouble();
+        }
+
+        /// <summary>
+        /// Queries the statistical results of any waveform parameter of the specified source.
+        /// The query returns the current measurement value in scientific notation.
+        /// </summary>
+        /// <param name="function">The type of measurement function to perform</param>
+        /// <returns>The measurement result in scientific notation</returns>
+        public async Task<double> QueryMeasurement(MeasureFunction function)
+        {
+            if (equipment is null || !equipment.IsConnected)
+                throw new Exception("Test equipment not connected");
+
+            await equipment.ClearBuffer();
+
+            await equipment.SendCommand($"MEAS:ITEM? {FunctionToString(function)}");
+
             return await equipment.ReadDouble();
         }
 
@@ -667,9 +1066,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return Enum.Parse<MeasureCategory>(await equipment.ReadString());
         }
 
-
-
-        public string MeasTypeToString(MeasureType meas)
+        private string MeasTypeToString(MeasureType meas)
         {
             switch (meas)
             {
@@ -689,7 +1086,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             }
         }
 
-        public string FunctionToString(MeasureFunction func)
+        private string FunctionToString(MeasureFunction func)
         {
             switch (func)
             {

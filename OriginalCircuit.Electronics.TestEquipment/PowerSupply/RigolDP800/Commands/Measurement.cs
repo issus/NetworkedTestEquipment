@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.PowerSupply.RigolDP800.Commands
 {
+    /// <summary>
+    /// Represents a set of measurement commands to be executed on the NetworkTestInstrument.
+    /// </summary>
     public class Measurement
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Measurement"/> class with the specified equipment.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument to perform the measurement commands on.</param>
         public Measurement(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;

@@ -6,66 +6,79 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands
 {
-
+    /// <summary>
+    /// Enum for timebase mode of the instrument.
+    /// </summary>
     public enum TimebaseMode
     {
         /// <summary>
-        /// indicates the YT mode.
+        /// Indicates the YT mode.
         /// </summary>
         MAIN,
+
         /// <summary>
-        ///  indicates the XY mode.
+        /// Indicates the XY mode.
         /// </summary>
         XY,
+
         /// <summary>
-        /// indicates the Roll mode.
+        /// Indicates the Roll mode.
         /// </summary>
         ROLL
     }
 
+    /// <summary>
+    /// Enum for horizontal reference mode of the instrument.
+    /// </summary>
     public enum HRefMode
     {
         /// <summary>
-        /// when the horizontal time base is modified, the waveform displayed
-        // will be expanded or compressed horizontally relative to the screen center
+        /// When the horizontal time base is modified, the waveform displayed will be expanded or compressed horizontally relative to the screen center.
         /// </summary>
         CENT,
+
         /// <summary>
-        /// when the horizontal time base is modified, the waveform displayed will be
-        /// expanded or compressed relative to the left border of the screen.
+        /// When the horizontal time base is modified, the waveform displayed will be expanded or compressed relative to the left border of the screen.
         /// </summary>
         LB,
+
         /// <summary>
-        /// when the horizontal time base is modified, the waveform displayed will be
-        /// expanded or compressed relative to the right border of the screen.
+        /// When the horizontal time base is modified, the waveform displayed will be expanded or compressed relative to the right border of the screen.
         /// </summary>
         RB,
+
         /// <summary>
-        /// when the horizontal time base is modified, the waveform displayed will
-        /// be expanded or compressed horizontally relative to the trigger position.
+        /// When the horizontal time base is modified, the waveform displayed will be expanded or compressed horizontally relative to the trigger position.
         /// </summary>
         TRIG,
+
         /// <summary>
-        /// when the horizontal time base is modified, the waveform displayed will
-        /// be expanded or compressed horizontally relative to the user-defined reference
-        /// position.
+        /// When the horizontal time base is modified, the waveform displayed will be expanded or compressed horizontally relative to the user-defined reference position.
         /// </summary>
         USER
     }
 
+    /// <summary>
+    /// Represents the timebase of a network test instrument and provides methods to control the delayed sweep functionality.
+    /// </summary>
     public class Timebase
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Timebase class.
+        /// </summary>
+        /// <param name="equipment">The network test instrument to which this timebase is attached.</param>
         public Timebase(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
         }
 
         /// <summary>
-        /// Turns on the delayed sweep
+        /// Turns on the delayed sweep functionality.
         /// </summary>
-        /// <returns></returns>
+        /// <exception cref="Exception">Thrown if the test equipment is not connected.</exception>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task EnableDelay()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -75,9 +88,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Turns off the delayed sweep
+        /// Turns off the delayed sweep functionality.
         /// </summary>
-        /// <returns></returns>
+        /// <exception cref="Exception">Thrown if the test equipment is not connected.</exception>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task DisableDelay()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -88,9 +102,8 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
         /// <summary>
         /// Queries the on/off status of the delayed sweep.
-        /// The query returns 1 or 0
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A boolean indicating whether the delayed sweep is enabled (true) or disabled (false).</returns>
         public async Task<bool> QueryDelayEnabled()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -103,9 +116,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        ///  Sets the offset of the delayed time base. The default unit is s
+        /// Sets the offset of the delayed time base.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="offset">The offset value to set.</param>
         public async Task SetDelayOffset(double offset)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -115,10 +128,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        ///  Queries the offset of the delayed time base. The default unit is s
-        ///  The query returns the offset of the delayed time base in scientific notation
+        /// Queries the offset of the delayed time base.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The offset value of the delayed time base in seconds.</returns>
         public async Task<double> QueryDelayOffset()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -131,9 +143,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Sets the scale of the delayed time base. The default unit is s/div
+        /// Sets the scale of the delayed time base.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="scale">The scale to set the delayed time base to, in seconds per division (s/div).</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task SetDelayScale(double scale)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -143,10 +156,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Queries the scale of the delayed time base. The default unit is s/div
-        /// The query returns the delayed time base scale in scientific notation
+        /// Queries the scale of the delayed time base.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The delayed time base scale in seconds per division (s/div), as a double in scientific notation.</returns>
         public async Task<double> QueryDelayScale()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -159,9 +171,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Sets the offset of the main time base. The default unit is s
+        /// Sets the offset of the main time base.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="offset">The offset to set the main time base to, in seconds (s).</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task SetOffset(double offset)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -171,10 +184,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Queries the offset of the main time base. The default unit is s
-        /// The query returns the offset of the main time base in scientific notation.
+        /// Queries the offset of the main time base.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The offset of the main time base in seconds (s), as a double in scientific notation.</returns>
         public async Task<double> QueryOffset()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -212,10 +224,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
         /// <summary>
-        /// Queries the scale of the main time base
-        /// The query returns the main time base scale in scientific notation
+        /// Queries the scale of the main time base.
+        /// The query returns the main time base scale in scientific notation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the main time base scale in scientific notation as a double value.</returns>
         public async Task<double> QueryScale()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -224,16 +236,17 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.ClearBuffer();
 
             await equipment.SendCommand("TIM:MAIN:SCAL?");
+
             return await equipment.ReadDouble();
         }
 
         /// <summary>
         /// Sets the horizontal time base mode.
-        /// MAIN: indicates the YT mode
-        /// XY: indicates the XY mode.
-        /// ROLL: indicates the Roll mode.
+        /// MAIN indicates the YT mode.
+        /// XY indicates the XY mode.
+        /// ROLL indicates the Roll mode.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="mode">Specifies the horizontal time base mode. Valid values are MAIN, XY, and ROLL.</param>
         public async Task SetMode(TimebaseMode mode)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -246,7 +259,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         /// Queries the horizontal time base mode.
         /// The query returns MAIN, XY, or ROLL.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the horizontal time base mode as a TimebaseMode enum value.</returns>
         public async Task<TimebaseMode> QueryMode()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -255,7 +268,29 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.ClearBuffer();
 
             await equipment.SendCommand($"TIM:MODE?");
+
             return Enum.Parse<TimebaseMode>(await equipment.ReadString());
+        }
+
+        /// <summary>
+        /// Specifies the horizontal time base mode for the test equipment.
+        /// </summary>
+        public enum TimebaseMode
+        {
+            /// <summary>
+            /// Specifies YT mode.
+            /// </summary>
+            MAIN,
+
+            /// <summary>
+            /// Specifies XY mode.
+            /// </summary>
+            XY,
+
+            /// <summary>
+            /// Specifies Roll mode.
+            /// </summary>
+            ROLL
         }
 
         /// <summary>

@@ -6,110 +6,17 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands.Triggers
 {
-    public class Edge
-    {
-        NetworkTestInstrument equipment;
-
-        public Edge(NetworkTestInstrument equipment)
-        {
-            this.equipment = equipment;
-        }
-
-        /// <summary>
-        /// Sets the trigger source of Edge trigger
-        /// </summary>
-        /// <returns></returns>
-        public async Task SetSource(TriggerEdgeSource source)
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.SendCommand($"TRIG:EDGE:SOUR {source}");
-        }
-
-        /// <summary>
-        /// Queries the trigger source of Edge trigger
-        /// The query returns D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14,  
-        /// D15, CHAN1, CHAN2, CHAN3, CHAN4, or ACL.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<TriggerEdgeSource> QuerySource()
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.ClearBuffer();
-
-            await equipment.SendCommand($"TRIG:EDGE:SOUR?");
-            return Enum.Parse<TriggerEdgeSource>(await equipment.ReadString());
-        }
-
-        /// <summary>
-        /// Sets the edge type of Edge trigger.
-        /// POSitive: indicates the rising edge.
-        /// NEGative: indicates the falling edge
-        /// RFALl: indicates the rising or falling edge
-        /// </summary>
-        /// <returns></returns>
-        public async Task SetSlope(TriggerSlope slope)
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.SendCommand($"TRIG:EDGE:SLOP {slope}");
-        }
-
-        /// <summary>
-        /// Queries the edge type of Edge trigger.
-        /// The query returns POS, NEG, or RFAL
-        /// </summary>
-        /// <returns></returns>
-        public async Task<TriggerSlope> QuerySlope()
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.ClearBuffer();
-
-            await equipment.SendCommand($"TRIG:EDGE:SLOP?");
-            return Enum.Parse<TriggerSlope>(await equipment.ReadString());
-        }
-
-        /// <summary>
-        /// Sets the trigger level of Edge trigger. The unit is the same as that of current
-        /// amplitude of the selected source.
-        /// </summary>
-        /// <returns></returns>
-        public async Task SetLevel(double level)
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.SendCommand($"TRIG:EDGE:LEV {level}");
-        }
-
-        /// <summary>
-        /// Queries the trigger level of Edge trigger. The unit is the same as that of current
-        /// amplitude of the selected source.
-        /// The query returns the trigger level in scientific notation.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<double> QueryLevel()
-        {
-            if (equipment is null || !equipment.IsConnected)
-                throw new Exception("Test equipment not connected");
-
-            await equipment.ClearBuffer();
-
-            await equipment.SendCommand($"TRIG:EDGE:LEV?");
-            return await equipment.ReadDouble();
-        }
-    }
-
+    /// <summary>
+    /// Represents a Pulse object which provides control over a Network Test Instrument.
+    /// </summary>
     public class Pulse
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Pulse class with the specified Network Test Instrument.
+        /// </summary>
+        /// <param name="equipment">The Network Test Instrument to be controlled.</param>
         public Pulse(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
@@ -263,10 +170,20 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
     }
 
+    /// <summary>
+    /// Slope class used to interact with a NetworkTestInstrument object
+    /// </summary>
     public class Slope
     {
-        NetworkTestInstrument equipment;
+        /// <summary>
+        /// NetworkTestInstrument object
+        /// </summary>
+        private NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Slope class.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument object to use for interaction</param>
         public Slope(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;

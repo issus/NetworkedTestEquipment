@@ -3,8 +3,15 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Represents a command that sets the constant voltage value of a Rigol DL3000 series load.
+    /// </summary>
     public class ConstantVoltage : ConstantWithRange
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantVoltage"/> class with the specified network test equipment.
+        /// </summary>
+        /// <param name="equipment">The network test equipment to send the command to.</param>
         public ConstantVoltage(NetworkTestInstrument equipment) : base(equipment, "VOLT") { }
 
         /// <summary>

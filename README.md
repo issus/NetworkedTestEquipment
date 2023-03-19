@@ -12,6 +12,7 @@ Currently, the following equipment is supported:
 * Rigol MSO5000 Series Oscilloscopes
 * Rigol DP800 Series Power Supplies
 * Rigol DL3000 Series DC Loads
+* Rohde & Schwarz LCX Series LCR Meters
 
 However, the code **should** work with most oscilloscopes/supplies/loads with most functions.
 

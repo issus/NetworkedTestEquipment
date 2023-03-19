@@ -3,22 +3,27 @@ using System.Linq;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 {
+    /// <summary>
+    /// Class representing a transient test of an electronic device using an LXI/SCPI test instrument.
+    /// </summary>
     public class Transient
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// The LXI/SCPI test instrument used for the transient test.
+        /// </summary>
         public Transient(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
         }
 
-
         /// <summary>
         /// Sets the transient operation mode in CC mode.
         /// </summary>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <param name="mode">The transient mode to be set.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task SetMode(TransientMode mode)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -45,8 +50,8 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
         /// <summary>
         /// Queries the transient operation mode in CC mode.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task<TransientMode?> QueryMode()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -60,13 +65,12 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
             return Source.TransientModeFromString(output);
         }
 
-
         /// <summary>
-        /// Sets Level A in transient operation mode
+        /// Sets Level A in transient operation mode.
         /// </summary>
-        /// <param name="range"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <param name="range">The range to be set. Use <see cref="DL3000Range.Minimum"/> for minimum range, <see cref="DL3000Range.Maximum"/> for maximum range, or <see cref="DL3000Range.Default"/> for default range.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task SetCurrentHigh(DL3000Range range)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -91,11 +95,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
         }
 
         /// <summary>
-        /// Sets Level A in transient operation mode
+        /// Sets Level A in transient operation mode.
         /// </summary>
-        /// <param name="range"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <param name="rate">The rate to be set.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task SetCurrentHigh(double rate)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -103,6 +107,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
 
             await equipment.SendCommand($"SOUR:CURR:TRANS:ALEV {rate:F4}");
         }
+
 
         /// <summary>
         /// Queries Level A set in transient operation mode.
@@ -151,11 +156,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Load.RigolDL3000.Commands
         }
 
         /// <summary>
-        /// Sets Level B in transient operation mode
+        /// Sets Level B in transient operation mode with specified current rate.
         /// </summary>
-        /// <param name="range"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <param name="rate">The current rate in amps per second to set Level B to. Range is 0 to maximum supported by the instrument.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown when test equipment is not connected.</exception>
         public async Task SetCurrentLow(double rate)
         {
             if (equipment is null || !equipment.IsConnected)

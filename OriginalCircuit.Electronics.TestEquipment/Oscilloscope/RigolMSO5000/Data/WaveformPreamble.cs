@@ -8,47 +8,68 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Data
 {
+    /// <summary>
+    /// Represents the preamble of a waveform.
+    /// </summary>
     public class WaveformPreamble
     {
+        /// <summary>
+        /// Gets or sets the waveform format.
+        /// </summary>
         public WaveformFormat Format { get; set; }
-        public WaveformMode Mode { get; set; }
 
         /// <summary>
-        /// After the memory depth option is installed, <points> is an integer ranging from
-        /// 1 to 200,000,000.
+        /// Gets or sets the waveform mode.
+        /// </summary>
+        public WaveformMode Mode { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the number of data points in the waveform.
+        /// After the memory depth option is installed, points is an integer ranging from 1 to 200,000,000.
         /// </summary>
         public int Points { get; set; }
+
         /// <summary>
-        /// Indicates the number of averages in the average sample mode. The value of parameter is 1 in other modes. 
+        /// Gets or sets the number of averages in the average sample mode. The value of this parameter is 1 in other modes.
         /// </summary>
         public int Averages { get; set; }
 
         /// <summary>
-        /// Indicates the time difference between two neighboring points in the X direction.
+        /// Gets or sets the time difference between two neighboring points in the X direction.
         /// </summary>
         public double XIncrement { get; set; }
+
         /// <summary>
-        /// Indicates the start time of the waveform data in the X direction. 
+        /// Gets or sets the start time of the waveform data in the X direction. 
         /// </summary>
         public double XOrigin { get; set; }
+
         /// <summary>
-        /// Indicates the reference time of the waveform data in the X direction. 
+        /// Gets or sets the reference time of the waveform data in the X direction.
         /// </summary>
         public double XReference { get; set; }
 
         /// <summary>
-        /// Indicates the step value of the waveforms in the Y direction. 
+        /// Gets or sets the step value of the waveforms in the Y direction. 
         /// </summary>
         public double YIncrement { get; set; }
+
         /// <summary>
-        /// indicates the vertical offset relative to the "Vertical Reference Position" in the Y direction.
+        /// Gets or sets the vertical offset relative to the "Vertical Reference Position" in the Y direction.
         /// </summary>
         public int YOrigin { get; set; }
+
         /// <summary>
-        /// Indicates the vertical reference position in the Y direction.
+        /// Gets or sets the vertical reference position in the Y direction.
         /// </summary>
         public int YReference { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the WaveformPreamble class with the specified query return string.
+        /// </summary>
+        /// <param name="queryReturn">The query return string.</param>
+        /// <exception cref="System.ArgumentNullException">Thrown when the query return string is null or empty.</exception>
         public WaveformPreamble(string queryReturn)
         {
             if (String.IsNullOrEmpty(queryReturn)) throw new ArgumentNullException("No query return.");
@@ -67,6 +88,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Da
             YReference = int.Parse((parts[9]), NumberStyles.Float);
         }
 
+        /// <summary>
+        /// Returns a string representation of the WaveformPreamble.
+        /// </summary>
+        /// <returns>A string representation of the WaveformPreamble.</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

@@ -7,60 +7,412 @@ using OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Comman
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000
 {
-
+    /// <summary>
+    /// Represents the available channels on the test equipment.
+    /// </summary>
     public enum ScopeChannel
     {
+        /// <summary>
+        /// Channel 1
+        /// </summary>
         CH1 = 1,
+
+        /// <summary>
+        /// Channel 2
+        /// </summary>
         CH2 = 2,
+
+        /// <summary>
+        /// Channel 3
+        /// </summary>
         CH3 = 3,
+
+        /// <summary>
+        /// Channel 4
+        /// </summary>
         CH4 = 4,
     }
 
+    /// <summary>
+    /// Represents the available coupling types on the test equipment.
+    /// </summary>
     public enum Coupling
     {
+        /// <summary>
+        /// Alternating Current
+        /// </summary>
         AC,
+
+        /// <summary>
+        /// Direct Current
+        /// </summary>
         DC,
+
+        /// <summary>
+        /// Ground
+        /// </summary>
         GND
     }
 
+    /// <summary>
+    /// Represents the available units for channel measurements on the test equipment.
+    /// </summary>
     public enum ChannelUnits
     {
+        /// <summary>
+        /// Voltage unit
+        /// </summary>
         Voltage,
+
+        /// <summary>
+        /// Watt unit
+        /// </summary>
         Watt,
+
+        /// <summary>
+        /// Ampere unit
+        /// </summary>
         Ampere,
+
+        /// <summary>
+        /// Unknown unit
+        /// </summary>
         Unknown
     }
 
+
+
+    /// <summary>
+    /// The keys available to the scope for remote control.
+    /// </summary>
     public enum ScopeKey
     {
-        CH1, CH2, CH3, CH4, MATH, REF, LA, DECode, MOFF, F1, F2,
-        F3, F4, F5, F6, F7, NPRevious, NNEXt, NSTop,
-        VOFFset1, VOFFset2, VOFFset3, VOFFset4, VSCale1,
-        VSCale2, VSCale3, VSCale4, HSCale, HPOSition, KFUNction,
-        TLEVel, TMENu, TMODe, DEFault, CLEar, AUTO, RSTop, SINGle,
-        QUICk, MEASure, ACQuire, STORage, CURSor, DISPlay, UTILity,
-        FORCe, GENerator1, GENerator2, BACK, TOUCh, ZOOM, SEARch
+        /// <summary>
+        /// Channel 1 key.
+        /// </summary>
+        CH1,
+        /// <summary>
+        /// Channel 2 key.
+        /// </summary>
+        CH2,
+
+        /// <summary>
+        /// Channel 3 key.
+        /// </summary>
+        CH3,
+
+        /// <summary>
+        /// Channel 4 key.
+        /// </summary>
+        CH4,
+
+        /// <summary>
+        /// Math key.
+        /// </summary>
+        MATH,
+
+        /// <summary>
+        /// Reference key.
+        /// </summary>
+        REF,
+
+        /// <summary>
+        /// Logic analyzer key.
+        /// </summary>
+        LA,
+
+        /// <summary>
+        /// Digital decode key.
+        /// </summary>
+        DECode,
+
+        /// <summary>
+        /// Menu off key.
+        /// </summary>
+        MOFF,
+
+        /// <summary>
+        /// Function 1 key.
+        /// </summary>
+        F1,
+
+        /// <summary>
+        /// Function 2 key.
+        /// </summary>
+        F2,
+
+        /// <summary>
+        /// Function 3 key.
+        /// </summary>
+        F3,
+
+        /// <summary>
+        /// Function 4 key.
+        /// </summary>
+        F4,
+
+        /// <summary>
+        /// Function 5 key.
+        /// </summary>
+        F5,
+
+        /// <summary>
+        /// Function 6 key.
+        /// </summary>
+        F6,
+
+        /// <summary>
+        /// Function 7 key.
+        /// </summary>
+        F7,
+
+        /// <summary>
+        /// Navigation previous key.
+        /// </summary>
+        NPRevious,
+
+        /// <summary>
+        /// Navigation next key.
+        /// </summary>
+        NNEXt,
+
+        /// <summary>
+        /// Navigation stop key.
+        /// </summary>
+        NSTop,
+
+        /// <summary>
+        /// Voltage offset set 1 key.
+        /// </summary>
+        VOFFset1,
+
+        /// <summary>
+        /// Voltage offset set 2 key.
+        /// </summary>
+        VOFFset2,
+
+        /// <summary>
+        /// Voltage offset set 3 key.
+        /// </summary>
+        VOFFset3,
+
+        /// <summary>
+        /// Voltage offset set 4 key.
+        /// </summary>
+        VOFFset4,
+
+        /// <summary>
+        /// Voltage scale 1 key.
+        /// </summary>
+        VSCale1,
+
+        /// <summary>
+        /// Voltage scale 2 key.
+        /// </summary>
+        VSCale2,
+
+        /// <summary>
+        /// Voltage scale 3 key.
+        /// </summary>
+        VSCale3,
+
+        /// <summary>
+        /// Voltage scale 4 key.
+        /// </summary>
+        VSCale4,
+
+        /// <summary>
+        /// Horizontal scale key.
+        /// </summary>
+        HSCale,
+
+        /// <summary>
+        /// Horizontal position key.
+        /// </summary>
+        HPOSition,
+
+        /// <summary>
+        /// Function key.
+        /// </summary>
+        KFUNction,
+
+        /// <summary>
+        /// Time level key.
+        /// </summary>
+        TLEVel,
+
+        /// <summary>
+        /// Time menu key.
+        /// </summary>
+        TMENu,
+
+        /// <summary>
+        /// Time mode key.
+        /// </summary>
+        TMODe,
+
+        /// <summary>
+        /// Default key.
+        /// </summary>
+        DEFault,
+
+        /// <summary>
+        /// Clear key
+        /// </summary>
+        CLEar,
+
+        /// <summary>
+        /// Auto key.
+        /// </summary>
+        AUTO,
+
+        /// <summary>
+        /// Reset stop key.
+        /// </summary>
+        RSTop,
+
+        /// <summary>
+        /// Single key.
+        /// </summary>
+        SINGle,
+
+        /// <summary>
+        /// Quick key.
+        /// </summary>
+        QUICk,
+
+        /// <summary>
+        /// Measure key.
+        /// </summary>
+        MEASure,
+
+        /// <summary>
+        /// Acquire key.
+        /// </summary>
+        ACQuire,
+
+        /// <summary>
+        /// Storage key.
+        /// </summary>
+        STORage,
+
+        /// <summary>
+        /// Cursor key.
+        /// </summary>
+        CURSor,
+
+        /// <summary>
+        /// Display key.
+        /// </summary>
+        DISPlay,
+
+        /// <summary>
+        /// Utility key.
+        /// </summary>
+        UTILity,
+
+        /// <summary>
+        /// Force key.
+        /// </summary>
+        FORCe,
+
+        /// <summary>
+        /// Generator 1 key.
+        /// </summary>
+        GENerator1,
+
+        /// <summary>
+        /// Generator 2 key.
+        /// </summary>
+        GENerator2,
+
+        /// <summary>
+        /// Back key.
+        /// </summary>
+        BACK,
+
+        /// <summary>
+        /// Touch key.
+        /// </summary>
+        TOUCh,
+
+        /// <summary>
+        /// Zoom key.
+        /// </summary>
+        ZOOM,
+
+        /// <summary>
+        /// Search key.
+        /// </summary>
+        SEARch
     }
 
+
+    /// <summary>
+    /// Represents the available channel bandwidths for the test equipment.
+    /// </summary>
     public static class ChannelBandwidth
     {
+        /// <summary>
+        /// The 20 MHz bandwidth option.
+        /// </summary>
         public static string BW20MHz { get; } = "20M";
+
+        /// <summary>
+        /// The 100 MHz bandwidth option.
+        /// </summary>
         public static string BW100MHz { get; } = "100M";
+
+        /// <summary>
+        /// The 200 MHz bandwidth option.
+        /// </summary>
         public static string BW200MHz { get; } = "200M";
+
+        /// <summary>
+        /// The option to turn off the channel bandwidth.
+        /// </summary>
         public static string Off { get; } = "OFF";
     }
 
+
+    /// <summary>
+    /// Represents a Rigol MSO5000 series oscilloscope instrument that communicates over the network using LXI/SCPI protocol.
+    /// </summary>
     public class RigolMSO5000Instrument : NetworkTestInstrument
     {
-        //public AcquireCommands Acquire { get; }
+        /// <summary>
+        /// The channel settings for the oscilloscope.
+        /// </summary>
         public Mso5000Channel Channel { get; }
+
+        /// <summary>
+        /// The measurement commands for the oscilloscope.
+        /// </summary>
         public Measure Measure { get; }
-        //public SaveCommands Save { get; }
+
+        /// <summary>
+        /// The trigger settings for the oscilloscope.
+        /// </summary>
         public Trigger Trigger { get; }
+
+        /// <summary>
+        /// The waveform data for the oscilloscope.
+        /// </summary>
         public Mso5000Waveform Waveform { get; }
+
+        /// <summary>
+        /// The display settings for the oscilloscope.
+        /// </summary>
         public Display Display { get; }
+
+        /// <summary>
+        /// The timebase settings for the oscilloscope.
+        /// </summary>
         public Timebase Timebase { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RigolMSO5000Instrument"/> class.
+        /// </summary>
         public RigolMSO5000Instrument() : base(InstrumentType.Oscilloscope)
         {
             //Acquire = new AcquireCommands(this);
@@ -157,6 +509,12 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000
             await SendCommand($"TFOR");
         }
 
+        /// <summary>
+        /// Sends a key press command to the test equipment.
+        /// </summary>
+        /// <param name="key">The key to be pressed.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        /// <exception cref="Exception">Thrown if test equipment is not connected.</exception>
         public async Task SendKeypress(ScopeKey key)
         {
             if (!IsConnected)
@@ -164,5 +522,6 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000
 
             await SendCommand($"SYST:KEY:PRES {key}");
         }
+
     }
 }

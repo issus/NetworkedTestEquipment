@@ -8,13 +8,112 @@ using System.Threading.Tasks;
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands
 {
 
+    /// <summary>
+    /// Represents the possible waveform sources for the oscilloscope.
+    /// </summary>
     public enum WaveformSource
     {
-        CHAN1, CHAN2, CHAN3, CHAN4,
-        D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14,
-        D15,  MATH1, MATH2, MATH3, MATH4
+        /// <summary>
+        /// Channel 1 waveform source.
+        /// </summary>
+        CHAN1,
+        /// <summary>
+        /// Channel 2 waveform source.
+        /// </summary>
+        CHAN2,
+        /// <summary>
+        /// Channel 3 waveform source.
+        /// </summary>
+        CHAN3,
+        /// <summary>
+        /// Channel 4 waveform source.
+        /// </summary>
+        CHAN4,
+        /// <summary>
+        /// Digital channel 0 waveform source.
+        /// </summary>
+        D0,
+        /// <summary>
+        /// Digital channel 1 waveform source.
+        /// </summary>
+        D1,
+        /// <summary>
+        /// Digital channel 2 waveform source.
+        /// </summary>
+        D2,
+        /// <summary>
+        /// Digital channel 3 waveform source.
+        /// </summary>
+        D3,
+        /// <summary>
+        /// Digital channel 4 waveform source.
+        /// </summary>
+        D4,
+        /// <summary>
+        /// Digital channel 5 waveform source.
+        /// </summary>
+        D5,
+        /// <summary>
+        /// Digital channel 6 waveform source.
+        /// </summary>
+        D6,
+        /// <summary>
+        /// Digital channel 7 waveform source.
+        /// </summary>
+        D7,
+        /// <summary>
+        /// Digital channel 8 waveform source.
+        /// </summary>
+        D8,
+        /// <summary>
+        /// Digital channel 9 waveform source.
+        /// </summary>
+        D9,
+        /// <summary>
+        /// Digital channel 10 waveform source.
+        /// </summary>
+        D10,
+        /// <summary>
+        /// Digital channel 11 waveform source.
+        /// </summary>
+        D11,
+        /// <summary>
+        /// Digital channel 12 waveform source.
+        /// </summary>
+        D12,
+        /// <summary>
+        /// Digital channel 13 waveform source.
+        /// </summary>
+        D13,
+        /// <summary>
+        /// Digital channel 14 waveform source.
+        /// </summary>
+        D14,
+        /// <summary>
+        /// Digital channel 15 waveform source.
+        /// </summary>
+        D15,
+        /// <summary>
+        /// Math channel 1 waveform source.
+        /// </summary>
+        MATH1,
+        /// <summary>
+        /// Math channel 2 waveform source.
+        /// </summary>
+        MATH2,
+        /// <summary>
+        /// Math channel 3 waveform source.
+        /// </summary>
+        MATH3,
+        /// <summary>
+        /// Math channel 4 waveform source.
+        /// </summary>
+        MATH4
     }
 
+    /// <summary>
+    /// Represents the possible waveform modes for the oscilloscope.
+    /// </summary>
     public enum WaveformMode
     {
         /// <summary>
@@ -35,6 +134,9 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         RAW = 2
     }
 
+    /// <summary>
+    /// Represents the waveform format used in a SCPI query.
+    /// </summary>
     public enum WaveformFormat
     {
         /// <summary>
@@ -53,19 +155,34 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         ASC = 2
     }
 
+    /// <summary>
+    /// Represents a waveform captured by an MSO5000 Oscilloscope.
+    /// </summary>
     public class Mso5000Waveform
     {
         NetworkTestInstrument? equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Mso5000Waveform"/> class.
+        /// </summary>
         public Mso5000Waveform()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Mso5000Waveform"/> class with the specified <see cref="NetworkTestInstrument"/>.
+        /// </summary>
+        /// <param name="equipment">The test equipment to use.</param>
         public Mso5000Waveform(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
         }
 
+        /// <summary>
+        /// Sets the waveform source to be used.
+        /// </summary>
+        /// <param name="source">The source to be set. (See <see cref="WaveformSource"/> for possible values)</param>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task SetSource(WaveformSource source)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -74,6 +191,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"WAV:SOUR {source}");
         }
 
+        /// <summary>
+        /// Queries the waveform source that is currently set.
+        /// </summary>
+        /// <returns>The current waveform source. (See <see cref="WaveformSource"/> for possible values)</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<WaveformSource> QuerySource()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -85,6 +207,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return Enum.Parse<WaveformSource>(await equipment.ReadString());
         }
 
+        /// <summary>
+        /// Sets the waveform mode to be used.
+        /// </summary>
+        /// <param name="mode">The mode to be set. (See <see cref="WaveformMode"/> for possible values)</param>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task SetMode(WaveformMode mode)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -93,6 +220,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"WAV:MODE {mode}");
         }
 
+        /// <summary>
+        /// Queries the waveform mode that is currently set.
+        /// </summary>
+        /// <returns>The current waveform mode. (See <see cref="WaveformMode"/> for possible values)</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<WaveformMode> QueryMode()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -104,6 +236,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return Enum.Parse<WaveformMode>(await equipment.ReadString());
         }
 
+        /// <summary>
+        /// Sets the waveform format.
+        /// </summary>
+        /// <param name="format">The waveform format to be set.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task SetFormat(WaveformFormat format)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -112,6 +249,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"WAV:FORM {format}");
         }
 
+        /// <summary>
+        /// Queries the waveform format.
+        /// </summary>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task<WaveformFormat> QueryFormat()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -123,6 +264,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return Enum.Parse<WaveformFormat>(await equipment.ReadString());
         }
 
+        /// <summary>
+        /// Sets the number of points in the waveform.
+        /// </summary>
+        /// <param name="points">The number of points to be set.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task SetPoints(int points)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -131,6 +277,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"WAV:POIN {points}");
         }
 
+        /// <summary>
+        /// Queries the number of available points in the waveform.
+        /// </summary>
+        /// <returns>A Task representing the asynchronous operation.</returns>
         public async Task<int> QueryAvailablePoints()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -142,6 +292,13 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadInt();
         }
 
+        /// <summary>
+        /// Gets waveform data points from the test equipment.
+        /// </summary>
+        /// <param name="source">The waveform source.</param>
+        /// <param name="mode">The waveform mode.</param>
+        /// <returns>A list of waveform data points.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<List<WaveformDataPoint>?> Data(WaveformSource? source = null, WaveformMode? mode = null)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -203,6 +360,12 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return points;
         }
 
+        /// <summary>
+        /// Queries the X increment from the test equipment.
+        /// </summary>
+        /// <returns>The X increment value.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
+
         public async Task<double> QueryXIncrement()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -214,6 +377,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Queries the X origin from the test equipment.
+        /// </summary>
+        /// <returns>The X origin value.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<double> QueryXOrigin()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -225,6 +393,11 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Queries the X reference from the test equipment.
+        /// </summary>
+        /// <returns>The X reference value.</returns>
+        /// <exception cref="Exception">Thrown when the test equipment is not connected.</exception>
         public async Task<double> QueryXReference()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -236,6 +409,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Queries the Y Increment value of the waveform from the instrument
+        /// </summary>
+        /// <returns>The Y Increment value</returns>
         public async Task<double> QueryYIncrement()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -247,6 +424,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Queries the Y Origin value of the waveform from the instrument
+        /// </summary>
+        /// <returns>The Y Origin value</returns>
         public async Task<double> QueryYOrigin()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -258,6 +439,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Queries the Y Reference value of the waveform from the instrument
+        /// </summary>
+        /// <returns>The Y Reference value</returns>
         public async Task<double> QueryYReference()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -269,6 +454,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadDouble();
         }
 
+        /// <summary>
+        /// Sets the start point of the waveform
+        /// </summary>
+        /// <param name="points">The point at which to start</param>
         public async Task SetStart(int points)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -276,7 +465,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
 
             await equipment.SendCommand($"WAV:STAR {points}");
         }
-
+        /// <summary>
+        /// Starts acquisition of the waveform.
+        /// </summary>
+        /// <returns>The integer result of the WAV:STAR? command sent to the equipment.</returns>
         public async Task<int> QueryStart()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -288,6 +480,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadInt();
         }
 
+        /// <summary>
+        /// Sets the stop point for the waveform acquisition.
+        /// </summary>
+        /// <param name="points">The number of points to set for the WAV:STOP command.</param>
         public async Task SetStop(int points)
         {
             if (equipment is null || !equipment.IsConnected)
@@ -296,6 +492,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             await equipment.SendCommand($"WAV:STOP {points}");
         }
 
+        /// <summary>
+        /// Queries the stop point of the waveform acquisition.
+        /// </summary>
+        /// <returns>The integer result of the WAV:STOP? command sent to the equipment.</returns>
         public async Task<int> QueryStop()
         {
             if (equipment is null || !equipment.IsConnected)
@@ -307,6 +507,10 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
             return await equipment.ReadInt();
         }
 
+        /// <summary>
+        /// Retrieves the waveform preamble.
+        /// </summary>
+        /// <returns>A <see cref="WaveformPreamble"/> object created from the result of the WAV:PRE? command sent to the equipment.</returns>
         public async Task<WaveformPreamble> Preamble()
         {
             if (equipment is null || !equipment.IsConnected)

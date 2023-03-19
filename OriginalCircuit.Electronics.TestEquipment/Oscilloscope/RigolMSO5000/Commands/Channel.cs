@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Commands
 {
+    /// <summary>
+    /// Represents a channel in an MSO5000 series oscilloscope.
+    /// </summary>
     public class Mso5000Channel
     {
         NetworkTestInstrument equipment;
 
+        /// <summary>
+        /// Initializes a new instance of the Mso5000Channel class with the specified NetworkTestInstrument instance.
+        /// </summary>
+        /// <param name="equipment">The NetworkTestInstrument instance used to communicate with the oscilloscope.</param>
         public Mso5000Channel(NetworkTestInstrument equipment)
         {
             this.equipment = equipment;
@@ -396,7 +403,7 @@ namespace OriginalCircuit.Electronics.TestEquipment.Oscilloscope.RigolMSO5000.Co
         }
 
 
-        public ChannelUnits ChannelUnitsFromString(string input)
+        private ChannelUnits ChannelUnitsFromString(string input)
         {
             switch (input.ToUpper())
             {
