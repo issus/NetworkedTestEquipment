@@ -723,5 +723,56 @@ namespace OriginalCircuit.Electronics.TestEquipment
                 tcpClient.Dispose();
         }
 
+
+        /// <summary>
+        /// Convert a number to a string representing the number in SI units
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public static string ConvertToSIUnits(double? number)
+        {
+            if (!number.HasValue)
+                return string.Empty;
+
+            string[] units = {
+                "f",
+                "p",
+                "n",
+                "μ",
+                "m",
+                "",
+                "k",
+                "M",
+                "G"
+            };
+            double[] thresholds = {
+                1e-15,
+                1e-12,
+                1e-9,
+                1e-6,
+                1e-3,
+                1e0,
+                1e3,
+                1e6,
+                1e9
+            };
+
+            int unitIndex = 0;
+
+            for (int i = 0; i < thresholds.Length; i++)
+            {
+                if ((double)Math.Abs((decimal)number) < thresholds[i])
+                {
+                    break;
+                }
+                unitIndex = i;
+            }
+
+            double? baseValue = number / thresholds[unitIndex];
+            string result = $"{baseValue:G4}{units[unitIndex]}";
+
+            return result;
+        }
+
     }
 }
