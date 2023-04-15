@@ -14,15 +14,15 @@ namespace OriginalCircuit.Electronics.TestEquipment.FunctionGenerator.SiglentSDG
         /// <summary>
         /// The network test instrument that this coupling command is for.
         /// </summary>
-        public NetworkTestInstrument? Equipment { get; }
+        NetworkTestInstrument? equipment;
 
         /// <summary>
         /// Creates a new coupling command for the specified network test instrument.
         /// </summary>
-        /// <param name="equipment">The network test instrument that this coupling command is for.</param>
-        public CouplingCommand(NetworkTestInstrument equipment)
+        /// <param name="instrument">The network test instrument that this coupling command is for.</param>
+        public CouplingCommand(NetworkTestInstrument instrument)
         {
-            Equipment = equipment;
+            equipment = instrument;
         }
 
         /// <summary>

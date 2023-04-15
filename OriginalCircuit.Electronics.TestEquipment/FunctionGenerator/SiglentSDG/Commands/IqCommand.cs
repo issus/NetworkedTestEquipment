@@ -14,16 +14,16 @@ namespace OriginalCircuit.Electronics.TestEquipment.FunctionGenerator.SiglentSDG
         /// <summary>
         /// Gets or sets the equipment used to send the command.
         /// </summary>
-        public NetworkTestInstrument? Equipment { get; set; }
+        NetworkTestInstrument? equipment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IqCommand"/> class
         /// with the specified equipment.
         /// </summary>
         /// <param name="equipment">The equipment used to send the command.</param>
-        public IqCommand(NetworkTestInstrument equipment)
+        public IqCommand(NetworkTestInstrument instrument)
         {
-            Equipment = equipment;
+            equipment = instrument;
         }
 
         /// <summary>

@@ -6,18 +6,25 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>OriginalCircuit</Authors>
-    <Description>Communicate using SCPI commands to LXI based electronics test equipment (Rigol MSO5000, DP800, DL3000 series, Rohde &amp; Schwarz LCX series).</Description>
+    <Description>Communicate using SCPI commands to LXI based electronics test equipment (Rigol MSO5000, DP800, DL3000 series, Rohde &amp; Schwarz LCX series, Siglent SDG series).</Description>
     <PackageProjectUrl>https://github.com/issus/NetworkedTestEquipment</PackageProjectUrl>
     <RepositoryUrl>https://github.com/issus/NetworkedTestEquipment/OriginalCircuit.Electronics.TestEquipment</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>electronics; rigol; lxi; scpi; lxi.net</PackageTags>
     <Copyright>Copyright 2022-2023, Original Circuit Limited. Released under MIT license.</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <PackageReleaseNotes>Added Siglent SDG function generator</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageIcon>Icon\128x128.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Icon\128x128.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Load\RigolDL3000\Data\" />
@@ -32,6 +39,16 @@
 
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Icon\128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="Icon\FullRes.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

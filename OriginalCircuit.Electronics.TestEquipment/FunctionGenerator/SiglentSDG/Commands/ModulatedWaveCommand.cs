@@ -19,15 +19,15 @@ namespace OriginalCircuit.Electronics.TestEquipment.FunctionGenerator.SiglentSDG
         /// <remarks>
         /// If this property is null, the command will not be executed.
         /// </remarks>
-        public NetworkTestInstrument? Equipment { get; }
+        NetworkTestInstrument? equipment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModulatedWaveCommand"/> class with the specified equipment.
         /// </summary>
-        /// <param name="equipment">The network test instrument to use for the command.</param>
-        public ModulatedWaveCommand(NetworkTestInstrument equipment)
+        /// <param name="instrument">The network test instrument to use for the command.</param>
+        public ModulatedWaveCommand(NetworkTestInstrument instrument)
         {
-            Equipment = equipment;
+            equipment = instrument;
         }
 
         /// <summary>

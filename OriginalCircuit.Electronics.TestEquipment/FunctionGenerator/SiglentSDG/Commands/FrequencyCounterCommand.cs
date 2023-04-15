@@ -16,15 +16,15 @@ namespace OriginalCircuit.Electronics.TestEquipment.FunctionGenerator.SiglentSDG
         /// <summary>
         /// The instrument that this command will be sent to.
         /// </summary>
-        public NetworkTestInstrument? Equipment { get; }
+        NetworkTestInstrument? equipment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrequencyCounterCommand"/> class with the specified equipment.
         /// </summary>
-        /// <param name="equipment">The instrument that this command will be sent to.</param>
-        public FrequencyCounterCommand(NetworkTestInstrument equipment)
+        /// <param name="instrument">The instrument that this command will be sent to.</param>
+        public FrequencyCounterCommand(NetworkTestInstrument instrument)
         {
-            Equipment = equipment;
+            equipment = instrument;
         }
 
         /// <summary>
