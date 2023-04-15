@@ -114,7 +114,12 @@ namespace OriginalCircuit.Electronics.TestEquipment
         /// <summary>
         /// An LCR meter instrument
         /// </summary>
-        LCRMeter
+        LCRMeter,
+
+        /// <summary>
+        /// An Arbitrary Function Generator
+        /// </summary>
+        FunctionGenerator
     }
 
     /// <summary>
