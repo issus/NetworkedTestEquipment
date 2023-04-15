@@ -13,6 +13,7 @@ Currently, the following equipment is supported:
 * Rigol DP800 Series Power Supplies
 * Rigol DL3000 Series DC Loads
 * Rohde & Schwarz LCX Series LCR Meters
+* Siglent SDG series arbitrary function generators
 
 However, the code **should** work with most oscilloscopes/supplies/loads with most functions.
 
